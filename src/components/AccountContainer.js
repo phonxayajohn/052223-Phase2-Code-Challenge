@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import TransactionsList from "./TransactionsList";
 import Search from "./Search";
 import AddTransactionForm from "./AddTransactionForm";
 
-function AccountContainer() {
+function AccountContainer({ transactions, addNewTransaction }) {
+  const [searchTerm, setSearchTerm] = useState('')
+
   return (
     <div>
-      <Search />
-      <AddTransactionForm />
-      <TransactionsList />
+      <Search setSearchTerm={setSearchTerm}/>
+      <AddTransactionForm addNewTransaction={addNewTransaction} />
+      <TransactionsList transactions={transactions
+        .filter(transaction => 
+        transaction.description.toLocaleLowerCase().startsWith(searchTerm.toLocaleLowerCase())
+        )}/>
     </div>
   );
 }
